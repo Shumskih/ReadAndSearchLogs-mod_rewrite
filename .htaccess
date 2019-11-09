@@ -1,0 +1,26 @@
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	RewriteBase /
+	RewriteRule ^nginx/?$ controllers/nginx.php [L]
+</IfModule>
+
+<IfModule mod_headers.c>
+    <FilesMatch "\.(js|css)$">
+    	Header set Cache-Control "max-age=120"
+    </FilesMatch>
+    <FilesMatch "\.(php)$">
+    	Header unset Cache-Control
+    </FilesMatch>
+</IfModule>
+
+<ifModule mod_expires.c>
+	ExpiresActive On
+	ExpiresDefault "access plus 5 seconds"
+
+	ExpiresByType text/css "access plus 120 seconds"
+	ExpiresByType text/javascript "access plus 120 seconds"
+	ExpiresByType application/javascript "access plus 120 seconds"
+	ExpiresByType application/x-javascript "access plus 120 seconds"
+</ifModule>
+
+ErrorDocument 404 /errors/404.php
